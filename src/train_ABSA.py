@@ -1,5 +1,6 @@
 import os, sys
-sys.path.insert(1, '../dataset')
+sys.path.insert(1, 'dataset')
+# sys.path.insert(1, '../dataset')
 import numpy as np
 import pandas as pd
 import warnings
@@ -19,11 +20,12 @@ parser.add_argument('--adapter', type=bool, default=True, help='adapter')
 def main (batch, epochs, lr, lr_schedule, adapter):
 
     #load
-    data = pd.read_csv('../dataset/normalized/restaurants_train.csv')
+    data = pd.read_csv('dataset/normalized/restaurants_train.csv')
+    # data = pd.read_csv('../dataset/normalized/restaurants_train.csv')
 
     from transformers import BertTokenizer
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-    DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     from absa import ABSAModel
     modelABSA = ABSAModel(tokenizer, adapter=True)

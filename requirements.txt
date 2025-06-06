@@ -2,14 +2,14 @@ contractions
 textblob
 spacy
 transformers
-numpy
+numpy<2
 pandas
 matplotlib
-warnings
+# warnings
 seaborn
-sklearn
+scikit-learn
 tensorflow
-torch
+# torch
 tqdm
-adapter-transformers
-itertools
+adapter-transformers==3.0.0
+# itertools
