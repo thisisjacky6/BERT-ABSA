@@ -1,5 +1,5 @@
 import os, sys
-sys.path.insert(1, '../dataset')
+# sys.path.insert(1, '../dataset')
 import numpy as np
 import pandas as pd
 import warnings
@@ -12,18 +12,18 @@ import torch
 parser = argparse.ArgumentParser()
 parser.add_argument('--batch', type=int, default=8, help='batch size')
 parser.add_argument('--epochs', type=int, default=5, help='number of epochs')
-parser.add_argument('--lr', type=float, default=3*1e-5, help='learning rate')
-parser.add_argument('--lr_schedule', type=bool, default=True, help='learning rate scheduler')
-parser.add_argument('--adapter', type=bool, default=False, help='adapter')
+parser.add_argument('--lr', type=float, default=3e-5, help='learning rate')
+parser.add_argument('--lr_schedule', action='store_true', help='learning rate scheduler')
+parser.add_argument('--adapter', action='store_true', help='adapter')
 
 def main (batch, epochs, lr, lr_schedule, adapter):
 
     #load
-    data = pd.read_csv('../dataset/normalized/restaurants_train.csv')
+    data = pd.read_csv('dataset/normalized/restaurants_train.csv')
 
     from transformers import BertTokenizer
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-    DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     from abte import ABTEModel
     modelABTE = ABTEModel(tokenizer, adapter)

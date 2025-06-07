@@ -42,7 +42,7 @@ class ABTEDataset(Dataset):
         return len(self.df)
 
 class ABTEBert(torch.nn.Module):
-    def __init__(self, pretrain_model, adapter=True):
+    def __init__(self, pretrain_model, adapter):
         super(ABTEBert, self).__init__()
         self.adapter = adapter
         if adapter:
@@ -66,7 +66,7 @@ class ABTEBert(torch.nn.Module):
             return linear_outputs
 
 class ABTEModel ():
-    def __init__(self, tokenizer, adapter=True):
+    def __init__(self, tokenizer, adapter):
         self.model = ABTEBert('bert-base-uncased', adapter=adapter)
         self.tokenizer = tokenizer
         self.trained = False
@@ -127,6 +127,8 @@ class ABTEModel ():
             else:
                 if lr_schedule: dir_name  = "model_ABTE_scheduler"
                 else: dir_name = "model_ABTE"
+                
+            dir_name = os.path.join('weights/', dir_name)
 
             if not os.path.exists(dir_name):
                 os.mkdir(dir_name)      
@@ -148,7 +150,7 @@ class ABTEModel ():
                 finish_data += 1
                 current_time = round(time.time() - t0,3)
                 current_times.append(current_time)          
-                print("epoch: {}\tbatch: {}/{}\tloss: {}\tbatch time: {}\ttotal time: {}"\
+                print("epoch: {}\tbatch: {}/{}\tloss: {:.4f}\tbatch time: {:.4f}\ttotal time: {:.4f}"\
                     .format(epoch, finish_data, all_data, loss.item(), current_time, sum(current_times)))
             
                 np.savetxt('{}/losses_lr{}_epochs{}_batch{}.txt'.format(dir_name, lr, epochs, batch_size), self.losses)

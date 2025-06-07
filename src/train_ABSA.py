@@ -14,8 +14,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--batch', type=int, default=8, help='batch size')
 parser.add_argument('--epochs', type=int, default=5, help='number of epochs')
 parser.add_argument('--lr', type=float, default=1e-5, help='learning rate')
-parser.add_argument('--lr_schedule', type=bool, default=False, help='learning rate scheduler')
-parser.add_argument('--adapter', type=bool, default=True, help='adapter')
+parser.add_argument('--lr_schedule', action='store_true', help='learning rate scheduler')
+parser.add_argument('--adapter', action='store_true', help='adapter')
 
 def main (batch, epochs, lr, lr_schedule, adapter):
 
@@ -28,8 +28,8 @@ def main (batch, epochs, lr, lr_schedule, adapter):
     DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     from absa import ABSAModel
-    modelABSA = ABSAModel(tokenizer, adapter=True)
-    modelABSA.train(data, batch_size=batch, lr=lr, epochs=epochs, device=DEVICE, lr_schedule=True)
+    modelABSA = ABSAModel(tokenizer, adapter=adapter)
+    modelABSA.train(data, batch_size=batch, lr=lr, epochs=epochs, device=DEVICE, lr_schedule=lr_schedule)
 
 if __name__ == '__main__':
     args = parser.parse_args()

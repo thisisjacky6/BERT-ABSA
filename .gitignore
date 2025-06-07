@@ -165,4 +165,5 @@ cython_debug/
 #.idea/
 
 bert-base-uncased
-model_ABSA_adapter_scheduler
+**/weights
+.vscode
