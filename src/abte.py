@@ -67,7 +67,7 @@ class ABTEBert(torch.nn.Module):
 
 class ABTEModel ():
     def __init__(self, tokenizer, adapter):
-        self.model = ABTEBert('bert-base-uncased', adapter=adapter)
+        self.model = ABTEBert('/home/STU/ljq/Projects/BERT-ABSA/bert-base-uncased', adapter=adapter)
         self.tokenizer = tokenizer
         self.trained = False
         self.adapter = adapter
@@ -154,8 +154,8 @@ class ABTEModel ():
                     .format(epoch, finish_data, all_data, loss.item(), current_time, sum(current_times)))
             
                 np.savetxt('{}/losses_lr{}_epochs{}_batch{}.txt'.format(dir_name, lr, epochs, batch_size), self.losses)
-
-            self.save_model(self.model, '{}/model_lr{}_epochs{}_batch{}.pkl'.format(dir_name, lr, epoch, batch_size))
+            if epoch == epochs - 1:
+                self.save_model(self.model, '{}/model_lr{}_epochs{}_batch{}.pkl'.format(dir_name, lr, epoch, batch_size))
             self.trained = True
 
     def history (self):

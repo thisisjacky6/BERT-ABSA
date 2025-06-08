@@ -24,7 +24,7 @@ def main (batch, epochs, lr, lr_schedule, adapter):
     # data = pd.read_csv('../dataset/normalized/restaurants_train.csv')
 
     from transformers import BertTokenizer
-    tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+    tokenizer = BertTokenizer.from_pretrained("/home/STU/ljq/Projects/BERT-ABSA/bert-base-uncased")
     DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     from absa import ABSAModel
